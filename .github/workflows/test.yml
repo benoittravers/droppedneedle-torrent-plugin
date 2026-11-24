@@ -11,15 +11,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # The plugin helper from DroppedNeedle v3.1.0 (sdk/python/droppedneedle_plugin.py).
       - uses: actions/checkout@v4
         with:
           repository: DroppedNeedle/DroppedNeedle
-          ref: 1cf117b4e0f3899d1daa786d316fd9ee8bcea1ab
+          ref: 29b4113715aabcd0203926fdbeb9b454fac2fe5e
           path: upstream
+          sparse-checkout: sdk
+      # The DroppedNeedle Docker image runs plugins with Debian bookworm's Python 3.11.
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
-      - run: python -m pip install -r upstream/backend/requirements-dev.txt
+          python-version: '3.11'
+      - run: python -m pip install pytest ruff
       - run: python -m pytest -q
         env:
           DROPPEDNEEDLE_SOURCE: ${{ github.workspace }}/upstream

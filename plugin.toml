@@ -1,12 +1,13 @@
 [plugin]
 name = "prowlarr-qbittorrent"
 display_name = "Torrents (Prowlarr / qBittorrent)"
-version = "0.2.0"
-api_version = 1
+version = "0.3.0"
+api_version = 2
 entrypoint = "plugin:TorrentPlugin"
 capabilities = ["download_client", "indexer"]
-description = "Prowlarr or Torznab search with qBittorrent downloads and seeding-safe import copies."
-author = "alphyriver"
+description = "Prowlarr or Torznab search with qBittorrent downloads; imports copies so torrents keep seeding."
+author = "alphyriver (v3 port: benoittravers)"
+homepage = "https://github.com/benoittravers/droppedneedle-torrent-plugin"
 
 [[capability]]
 id = "download_client"
@@ -20,37 +21,37 @@ target_source = "plugin:prowlarr-qbittorrent"
 [[settings]]
 key = "qbittorrent_url"
 label = "qBittorrent URL"
-help = "Web UI base URL; qBittorrent 5.2+ required."
+help = "Web UI base URL, e.g. http://qbittorrent:8080. qBittorrent 5.2+ required."
 secret = false
 
 [[settings]]
 key = "qbittorrent_api_key"
 label = "qBittorrent API key"
-help = "Bearer API key."
+help = "Web UI bearer API key (qBittorrent > Options > Web UI)."
 secret = true
 
 [[settings]]
 key = "downloads_path"
-label = "Torrent downloads mount"
-help = "Absolute path inside DroppedNeedle mapping the qBittorrent category save directory."
+label = "Torrent downloads folder"
+help = "Absolute path inside DroppedNeedle where the qBittorrent category's save folder is mounted. Read-only is fine."
 secret = false
 
 [[settings]]
-key = "staging_path"
-label = "Import staging directory"
-help = "Dedicated absolute writable directory, separate from downloads and the music library. Copies use additional disk space."
+key = "downloads_dir"
+label = "Import staging folder"
+help = "Absolute writable folder for import copies, separate from the torrent downloads and the library. Empty: the plugin's data folder. Copies use extra disk space until imported."
 secret = false
 
 [[settings]]
 key = "category"
 label = "qBittorrent category"
-help = "Default: droppedneedle. Configure its save path in qBittorrent first."
+help = "Default: droppedneedle. Create it in qBittorrent first, with the save folder mounted above."
 secret = false
 
 [[settings]]
 key = "search_backend"
 label = "Search backend"
-help = "prowlarr (default) or torznab. Exactly one backend is used."
+help = "prowlarr (default) or torznab."
 secret = false
 
 [[settings]]
@@ -62,19 +63,19 @@ secret = false
 [[settings]]
 key = "prowlarr_api_key"
 label = "Prowlarr API key"
-help = "Required when search_backend is prowlarr."
+help = "Required when the search backend is prowlarr."
 secret = true
 
 [[settings]]
 key = "torznab_url"
 label = "Torznab URL"
-help = "One direct Torznab feed URL; use Prowlarr to aggregate multiple indexers."
+help = "One Torznab feed URL; use Prowlarr to combine several indexers."
 secret = false
 
 [[settings]]
 key = "torznab_api_key"
 label = "Torznab API key"
-help = "Required when search_backend is torznab."
+help = "Required when the search backend is torznab."
 secret = true
 
 [[settings]]
